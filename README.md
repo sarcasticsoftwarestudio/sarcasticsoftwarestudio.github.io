@@ -13,10 +13,16 @@ To publish a release:
 
 1. Run `build-installer.ps1` in the FyleFunnl repo — it produces `dist/version.json` alongside
    the installer.
-2. Copy `dist/version.json` over `fylefunnl/version.json` here.
-3. Host the installer at the manifest's `downloadUrl` (by default,
-   `fylefunnl/FyleFunnl-Setup-<version>.exe` in this repo).
-4. Commit and push. Pages redeploys automatically.
+2. Upload the installer as a GitHub Release asset **on this repo** (that is where the manifest's
+   `downloadUrl` points; installers are too big to keep committing into git history):
+
+   ```
+   gh release create v<version> dist\FyleFunnl-Setup-<version>.exe \
+       --repo sarcasticsoftwarestudio/sarcasticsoftwarestudio.github.io --title "FyleFunnl <version>"
+   ```
+
+3. Copy `dist/version.json` over `fylefunnl/version.json` here.
+4. Commit and push. Pages redeploys automatically, and installed builds notify within a day.
 
 The manifest is a static file; the app's fetch of it carries no user data. Keep it that way —
 the FyleFunnl README promises users the update check sends nothing.
